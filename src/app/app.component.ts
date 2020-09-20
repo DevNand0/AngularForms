@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'tdf/user';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   topics = ['Angular','React','Vue'];
+  userModel = new User("Fernanda Inayao","fernanditaaaa1992@gmail.com",5334521,"","morning",true);
 }
