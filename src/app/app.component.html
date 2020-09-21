@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <h1>Bootcamp Enrollment Form</h1>
-  <form #userForm="ngForm">
-  {{userForm.value | json}}
+  <form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">
     <hr/>
     <div class="form-group">
       <label for="name">Name</label>
@@ -26,10 +25,13 @@
     </div>
     <div class="form-group">
       <label for="">Interes</label>
-      <select name="topic" id="topic" class="custom-select" [(ngModel)]="userModel.topic">
-        <option selected>interesado en</option>
+      <select (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)"
+              #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched" 
+              name="topic" id="topic" class="custom-select" [(ngModel)]="userModel.topic">
+        <option selected value="">interesado en</option>
         <option *ngFor="let t of topics">{{ t }}</option>
       </select>
+      <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Seleccione un topico</small>
     </div>
     <div class="mb-3">
       <label for="">Horario de Preferencia</label>
@@ -69,6 +71,6 @@
       <label for="" class="form-check-label">Enviar ofertas</label>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button [disabled]="userForm.form.invalid || topicHasError" type="submit" class="btn btn-primary">Enviar</button>
   </form>
 </div>
